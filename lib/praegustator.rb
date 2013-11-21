@@ -1,6 +1,7 @@
 require "praegustator/version"
 require 'praegustator/cli'
 require 'praegustator/executor'
+require 'praegustator/dsl'
 require 'yaml'
 
 module Praegustator
@@ -17,7 +18,7 @@ module Praegustator
     begin
       p path_to_yaml_file
       config = yaml::load(io.read(path_to_yaml_file))
-    rescue Exception 
+    rescue Exception
       p "yaml configuration file couldn't be found. using defaults."; return
     end
     configure(config)

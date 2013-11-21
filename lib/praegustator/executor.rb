@@ -1,7 +1,7 @@
 require "thor"
 
 module Praegustator
-  class Executor 
+  class Executor
     def self.execute(type)
       puts "executed"
     end
