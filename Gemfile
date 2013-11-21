@@ -1,4 +1,6 @@
 source 'https://rubygems.org'
-gem 'thor'
-gem 'colorize'
-gem 'serverspec'
+
+
+group :development, :test do
+  gem 'rspec'
+end
