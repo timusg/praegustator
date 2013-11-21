@@ -4,5 +4,5 @@ Feature: Anbu
   I want to be as objective as possible
 
   Scenario: run inspect
-    When I run "praegustator taste"
+    When I run "praeg test"
     Then the output should contain "executed"

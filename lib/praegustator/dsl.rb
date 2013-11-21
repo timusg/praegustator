@@ -14,11 +14,13 @@ module Praegustator
     end
 
     def recipe(name, &block)
-      search("run_list:recipe\\[#{name}\\]".gsub(":","\\:"),&block)
+      name = name.gsub(":","\\:")
+      search("run_list:recipe\\[#{name}\\]",&block)
     end
 
     def search(query, &block)
       query = "#{query} AND chef_environment:#{@environment}" if @environment
+      p query
       suits = TestSuite.new(query)
       suits.instance_eval(&block)
       @suits << suits

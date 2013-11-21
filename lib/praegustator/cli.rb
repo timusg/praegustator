@@ -9,7 +9,7 @@ module Praegustator
     method_option :recipe, :aliases => "-r"
     def taste
       config_file_path = options[:config_path]
-      config_file_path = ".praegustator.yml" unless config_file_path
+      config_file_path = File.pwd+"./.praegustator.yml" unless config_file_path
 
       Praegustator.configure_with config_file_path
       Praegustator::Executor.execute(options[:type])
@@ -18,7 +18,7 @@ module Praegustator
 
     desc "validate", "validate infrastructure  more optimized version of taste"
     method_option :config_path, :aliases => "-c"
-    def taste
+    def validate
       config_file_path = options[:config_path]
       config_file_path = ".praegustator.yml" unless config_file_path
 

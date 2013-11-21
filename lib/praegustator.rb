@@ -3,6 +3,8 @@ require 'praegustator/cli'
 require 'praegustator/executor'
 require 'praegustator/test_suite'
 require 'praegustator/dsl'
+require 'praegustator/chef'
+require 'praegustator/node'
 require 'yaml'
 
 module Praegustator
