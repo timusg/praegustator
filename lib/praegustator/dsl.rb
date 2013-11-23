@@ -22,7 +22,6 @@ module Praegustator
       search("ipaddress:#{address}",&block)
     end
 
-
     def search(query, &block)
       query = "#{query} AND chef_environment:#{@environment}" if @environment
       suite = TestSuite.new(query)
@@ -41,4 +40,3 @@ module Praegustator
     end
   end
 end
-

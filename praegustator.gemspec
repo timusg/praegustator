@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Praegustator::VERSION
   spec.authors       = ["timusg"]
   spec.email         = ["timusga@gmail.com"]
-  spec.description   = %q{test and validate the chef managed infrastructure}
-  spec.summary       = "praegustator-#{Praegustator::VERSION}"
+  spec.description   = %q{taste and validate the chef cooked infrastructure}
+  spec.summary       = %q{DSL to reuse server spec}
   spec.homepage      = ""
   spec.license       = "MIT"
 
