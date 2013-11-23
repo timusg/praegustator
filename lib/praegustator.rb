@@ -1,9 +1,10 @@
+require 'praegustator/wrappers/server_spec'
 require "praegustator/version"
 require 'praegustator/cli'
 require 'praegustator/executor'
 require 'praegustator/test_suite'
 require 'praegustator/dsl'
-require 'praegustator/chef'
+require 'praegustator/wrappers/chef'
 require 'praegustator/node'
 require 'yaml'
 require 'colorize'
