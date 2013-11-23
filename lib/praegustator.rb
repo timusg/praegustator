@@ -6,25 +6,29 @@ require 'praegustator/dsl'
 require 'praegustator/chef'
 require 'praegustator/node'
 require 'yaml'
+require 'colorize'
 
 module Praegustator
   @config = {
-    :log_level => "verbose",
-    :driver => "chef",
-    :knife_location =>  ENV['KNIFE_PATH'] || "~/.chef/knife.rb",
-    :backend => "serverspec",
-    :spec_dir => "spec"
+    log_level: "verbose",
+    driver: "chef",
+    knife_location:  ENV['KNIFE_PATH'] || "~/.chef/knife.rb",
+    backend:  "serverspec",
+    recipes_dir:  "spec/",
+    checks_dir: "spec/shared",
+    ssh: {user: "root",pasword: nil, keys: []}
   }
 
 
   def self.configure_with(path_to_yaml_file)
     begin
-      p path_to_yaml_file
-      config = yaml::load(io.read(path_to_yaml_file))
+      config = YAML::load(IO.read(path_to_yaml_file))
+    rescue Psych::SyntaxError
+      p  "error while parsing yaml configuration file. using defaults."; return
     rescue Exception
-      p "yaml configuration file couldn't be found. using defaults."; return
+      p  "yaml configuration file couldn't be found. using defaults."; return
     end
-    configure(config)
+    configure(config)  if config
   end
 
   def self.config
@@ -37,3 +41,29 @@ module Praegustator
     opts.each {|k,v| @config[k.to_sym] = v if valid_keys.include? k.to_sym}
   end
 end
+
+
+  module RSpec
+    module Core
+      class Runner
+        def self.run(args, err=$stderr, out=$stdout)
+          trap_interrupt
+          options = ConfigurationOptions.new(args)
+          options.parse_options
+
+          if options.options[:drb]
+            require 'rspec/core/drb_command_line'
+            begin
+              DRbCommandLine.new(options).run(err, out)
+            rescue DRb::DRbConnError
+              CommandLine.new(options).run(err, out)
+            end
+          else
+            CommandLine.new(options).run(err, out)
+          end
+        ensure
+          #RSpec.reset
+        end
+      end
+    end
+  end

@@ -19,8 +19,12 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "thor"
-  spec.add_dependency "chef"
-  spec.add_dependency "serverspec"
+  spec.add_runtime_dependency "net-ssh"
+  spec.add_runtime_dependency "rspec", ">= 2.13.0"
+  spec.add_runtime_dependency "highline"
+  spec.add_runtime_dependency "chef"
+  spec.add_runtime_dependency"serverspec"
+  spec.add_runtime_dependency"colorize"
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"

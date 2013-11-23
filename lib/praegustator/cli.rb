@@ -4,26 +4,22 @@ require 'praegustator'
 module Praegustator
   class CLI < Thor
     desc "taste", "test infrastructure"
-    method_option :config_path, :aliases => "-c"
     method_option :query, :aliases => "-q"
     method_option :recipe, :aliases => "-r"
-    def taste
-      config_file_path = options[:config_path]
-      config_file_path = File.pwd+"./.praegustator.yml" unless config_file_path
-
+    def taste(*recipes)
+      recipes = Dir[Dir.pwd+"/spec/**/*_recipe.rb"] if recipes.empty?
+      config_file_path = Dir.pwd+"/.praegustator.yml"
       Praegustator.configure_with config_file_path
-      Praegustator::Executor.execute(options[:type])
+      p recipes
+      Praegustator::Executor.execute(recipes)
     end
 
 
     desc "validate", "validate infrastructure  more optimized version of taste"
-    method_option :config_path, :aliases => "-c"
     def validate
-      config_file_path = options[:config_path]
-      config_file_path = ".praegustator.yml" unless config_file_path
-
+      config_file_path = Dir.pwd+"/.praegustator.yml"
       Praegustator.configure_with config_file_path
-      Praegustator::Executor.execute(options[:type])
+      Praegustator::Executor.execute()
     end
 
   end

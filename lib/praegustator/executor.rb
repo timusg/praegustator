@@ -2,8 +2,11 @@ require 'praegustator'
 
 module Praegustator
   class Executor
-    def self.execute(type)
-       Praegustator::Dsl.new.parse_file(Dir.pwd+"/spec/staging_recipe.rb")
+    def self.execute(recipes)
+       recipes.each do |recipe|
+       suits = Praegustator::Dsl.new.parse_file(recipe)
+       suits.each(&:execute)
+       end
     end
   end
 end

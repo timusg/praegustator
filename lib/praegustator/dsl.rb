@@ -20,7 +20,6 @@ module Praegustator
 
     def search(query, &block)
       query = "#{query} AND chef_environment:#{@environment}" if @environment
-      p query
       suits = TestSuite.new(query)
       suits.instance_eval(&block)
       @suits << suits
