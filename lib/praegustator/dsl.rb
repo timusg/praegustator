@@ -18,11 +18,17 @@ module Praegustator
       search("run_list:recipe\\[#{name}\\]",&block)
     end
 
+    def ip(address, &block)
+      search("ipaddress:#{address}",&block)
+    end
+
+
     def search(query, &block)
       query = "#{query} AND chef_environment:#{@environment}" if @environment
-      suits = TestSuite.new(query)
-      suits.instance_eval(&block)
-      @suits << suits
+      suite = TestSuite.new(query)
+      suite.instance_eval(&block)
+      @suits << suite
+      suite.nodes
     end
 
     def parse_file(filename)

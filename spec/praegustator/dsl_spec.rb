@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Praegustator::Dsl do
   before :each do
-    Praegustator::Chef.stub(:search)
+    Praegustator::Wrappers::Chef.stub(:search)
   end
 
   describe "#parse_file" do

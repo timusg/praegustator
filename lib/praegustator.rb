@@ -1,4 +1,3 @@
-require 'praegustator/wrappers/server_spec'
 require "praegustator/version"
 require 'praegustator/cli'
 require 'praegustator/executor'
@@ -44,27 +43,27 @@ module Praegustator
 end
 
 
-  module RSpec
-    module Core
-      class Runner
-        def self.run(args, err=$stderr, out=$stdout)
-          trap_interrupt
-          options = ConfigurationOptions.new(args)
-          options.parse_options
+module RSpec
+  module Core
+    class Runner
+      def self.run_patched(args, err=$stderr, out=$stdout)
+        trap_interrupt
+        options = ConfigurationOptions.new(args)
+        options.parse_options
 
-          if options.options[:drb]
-            require 'rspec/core/drb_command_line'
-            begin
-              DRbCommandLine.new(options).run(err, out)
-            rescue DRb::DRbConnError
-              CommandLine.new(options).run(err, out)
-            end
-          else
+        if options.options[:drb]
+          require 'rspec/core/drb_command_line'
+          begin
+            DRbCommandLine.new(options).run(err, out)
+          rescue DRb::DRbConnError
             CommandLine.new(options).run(err, out)
           end
-        ensure
-          #RSpec.reset
+        else
+          CommandLine.new(options).run(err, out)
         end
+      ensure
+        #RSpec.reset
       end
     end
   end
+end
