@@ -3,6 +3,6 @@ Feature: Praegustator
   As a CLI
   I want to check the apache installed
 
-  Scenario: check apache
+  Scenario: check nginx
     When I run "praeg taste"
-    Then the output should contain "executed"
+    Then the output should contain "should be installed"
