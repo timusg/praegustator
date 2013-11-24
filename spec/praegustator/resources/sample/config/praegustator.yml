@@ -1,8 +1,8 @@
 spec:
-  recipes_dir:  "../../features_setup/recipies/"
-  checks_dir:   "../../features_setup/recipies/checks/"
+  recipes_dir:  "recipies/"
+  checks_dir:   "recipies/checks/"
 chef:
-  knife_location: "../../features_setup/setup/.zero-knife.rb"
+  knife_location: ".zero-knife.rb"
 ssh:
   user: "vagrant"
   pasword: nil
