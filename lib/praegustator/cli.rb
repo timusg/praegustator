@@ -25,6 +25,7 @@ module Praegustator
       recipes = Dir[Dir.pwd+"/#{recipes_dir}/**/*_recipe.rb"] if recipes.empty?
       Praegustator::Executor.new.execute(recipes)
     end
+
     desc "init" , "setup praegustator"
     long_desc " > $ praeg setup spec_dir"
     def init(spec_dir ='spec')

@@ -23,7 +23,7 @@ module Praegustator
             begin
               c.ssh   = Net::SSH.start(c.host, user, options)
             rescue Exception => e
-              p e
+              $stderr.puts "!! ssh failed #{e.message}"
               break
             end
             c.os    = backend.check_os
