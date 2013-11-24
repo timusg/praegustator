@@ -17,7 +17,7 @@ module Praegustator
           RSpec.configure do |c|
             c.host  = ENV['TARGET_HOST']
             options = Net::SSH::Config.for(c.host)
-            user    = Praegustator.config['ssh']['user'] || "root"
+            user    = options[:user] || Praegustator.config['ssh']['user']
             options[:keys] = Praegustator.config['ssh']['keys'] if options[:keys].nil?
             options[:timeout] = 10
             begin
