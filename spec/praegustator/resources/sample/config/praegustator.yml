@@ -1,0 +1,9 @@
+spec:
+  recipes_dir:  "../../features_setup/recipies/"
+  checks_dir:   "../../features_setup/recipies/checks/"
+chef:
+  knife_location: "../../features_setup/setup/.zero-knife.rb"
+ssh:
+  user: "vagrant"
+  pasword: nil
+  keys: [ "~/.vagrant.d/insecure_private_key" ]

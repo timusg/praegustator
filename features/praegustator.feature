@@ -1,8 +1,8 @@
-Feature: Anbu
+Feature: Praegustator
   In order to validate environment
   As a CLI
-  I want to be as objective as possible
+  I want to check the apache installed
 
-  Scenario: run inspect
-    When I run "praeg test"
+  Scenario: check apache
+    When I run "praeg taste"
     Then the output should contain "executed"

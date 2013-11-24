@@ -1,0 +1,13 @@
+{
+  "sources": {
+    "setup": {
+      "path": "."
+    },
+    "apache": {
+      "locked_version": "0.0.5"
+    },
+    "apache2": {
+      "locked_version": "1.8.4"
+    }
+  }
+}

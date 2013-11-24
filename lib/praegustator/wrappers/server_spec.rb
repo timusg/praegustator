@@ -17,8 +17,8 @@ module Praegustator
           RSpec.configure do |c|
             c.host  = ENV['TARGET_HOST']
             options = Net::SSH::Config.for(c.host)
-            user    = "root"
-            options[:keys] = Praegustator.config[:ssh]["keys"] if options[:keys].nil?
+            user    = Praegustator.config['ssh']['user'] || "root"
+            options[:keys] = Praegustator.config['ssh']['keys'] if options[:keys].nil?
             options[:timeout] = 10
             begin
               c.ssh   = Net::SSH.start(c.host, user, options)
@@ -35,7 +35,7 @@ module Praegustator
             reporter =  RSpec::Core::Reporter.new(documentation_formatter)
             c.instance_variable_set(:@reporter, reporter)
           end
-          spec_files = checks.keys.map{|check| "#{Dir.pwd}/#{Praegustator.config[:checks_dir]}/#{check}.rb" }
+          spec_files = checks.keys.map{|check| "#{Dir.pwd}/#{Praegustator.config['spec']['checks_dir']}/#{check}.rb" }
           RSpec::Core::Runner.run_patched(spec_files, $stderr, $stdout)
           RSpec.reset
         end

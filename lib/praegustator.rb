@@ -5,20 +5,28 @@ require 'praegustator/test_suite'
 require 'praegustator/dsl'
 require 'praegustator/wrappers/chef'
 require 'praegustator/node'
+require 'praegustator/setup'
 require 'yaml'
 require 'colorize'
 
 module Praegustator
   @config = {
-    log_level: "verbose",
-    driver: "chef",
-    knife_location:  ENV['KNIFE_PATH'] || "~/.chef/knife.rb",
-    backend:  "serverspec",
-    recipes_dir:  "spec/",
-    checks_dir: "spec/shared",
-    ssh: {user: "root",pasword: nil, keys: []}
+    'log_level' => 'info',
+    'search_driver' => 'chef',
+    'chef' => {
+      'knife_location' =>  ENV['KNIFE_PATH'] || "~/.chef/knife.rb"
+    },
+    'spec' => {
+      'backend' => 'serverspec',
+      'recipes_dir' =>  'spec/',
+      'checks_dir' => 'spec/shared',
+    },
+    'ssh' => {
+      'user' => 'root',
+      'pasword' => nil,
+      'keys' => []
+    }
   }
-
 
   def self.configure_with(path_to_yaml_file)
     begin
@@ -38,7 +46,7 @@ module Praegustator
   private
   def self.configure(opts = {})
     valid_keys = @config.keys
-    opts.each {|k,v| @config[k.to_sym] = v if valid_keys.include? k.to_sym}
+    opts.each {|k,v| @config[k] = v if valid_keys.include? k}
   end
 end
 

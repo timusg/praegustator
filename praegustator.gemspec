@@ -8,14 +8,14 @@ Gem::Specification.new do |spec|
   spec.version       = Praegustator::VERSION
   spec.authors       = ["timusg"]
   spec.email         = ["timusga@gmail.com"]
-  spec.description   = %q{taste and validate the chef cooked infrastructure}
-  spec.summary       = %q{DSL to reuse server spec}
+  spec.description   = %q{taste the chef cooked infrastructure for bitternes}
+  spec.summary       = %q{DSL over server spec to test multiple chef managed nodes}
   spec.homepage      = ""
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features|feautures_setup|tmp)/})
   spec.require_paths = ["lib"]
 
   spec.add_dependency "thor"
