@@ -1,8 +1,10 @@
+## Tools
+
 rspec for units
 
 aruba for features 
 
-Install 
+## Install 
 
 vagarnt
 vagrant plugin install vagrant-berkshelf
