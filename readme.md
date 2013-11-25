@@ -20,7 +20,8 @@ check against them, whereas checks are rspec files with server-spec matchers def
 
 sample recipe for praegustator:
 
-``` ruby  sample_recipe.rb
+``` ruby
+#sample_recipe.rb
 environment :staging
 
 role("web-server") do
@@ -34,7 +35,9 @@ block passed to `role` you can declare checks using the `check` method.
 
 Where check are server spec files:
 
-``` ruby  #{spec_dir}/application/nginx.rb
+``` ruby
+#{spec_dir}/application/nginx.rb
+
 describe package('nginx') do
   it { should be_installed }
 end
