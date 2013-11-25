@@ -1,3 +1,4 @@
+describe "nginx" do
 describe package('nginx') do
   it { should be_installed }
 end
@@ -9,4 +10,5 @@ end
 
 describe port(80) do
   it { should be_listening }
+end
 end

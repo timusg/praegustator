@@ -1,18 +1,28 @@
 require 'praegustator'
+require 'praegustator/wrappers/output_parser'
 require 'net/ssh'
 require 'serverspec'
 require 'rspec/core/formatters/json_formatter'
 require 'rspec/core/formatters/documentation_formatter'
+
 include Serverspec::Helper::Ssh
 include Serverspec::Helper::DetectOS
 
 module Praegustator
   module Wrappers
     class ServerSpec
+
+      def initialize
+        @parser = Praegustator::Wrappers::OutputParser.new
+      end
+
+
       def execute nodes,checks
         nodes.each do |n|
-          p "executing test for #{n.ipaddress}"
           ENV['TARGET_HOST'] = n.ipaddress
+          formatter = RSpec::Core::Formatters::JsonFormatter.new(nil)
+          #RSpec.reset
+          RSpec.clear_remaining_example_groups
           load 'serverspec.rb'
           RSpec.configure do |c|
             c.host  = ENV['TARGET_HOST']
@@ -23,21 +33,28 @@ module Praegustator
             begin
               c.ssh   = Net::SSH.start(c.host, user, options)
             rescue Exception => e
-              $stderr.puts "!! ssh failed #{e.message}"
+              $stderr.puts "!! ssh failed for #{n.ipaddress} : #{e.message}"
               break
             end
             c.os    = backend.check_os
             c.output = $stdout
-            p "running spec for #{c.host}"
             c.color_enabled = true
             c.tty = true
-            documentation_formatter = RSpec::Core::Formatters::DocumentationFormatter.new(c.output)
-            reporter =  RSpec::Core::Reporter.new(documentation_formatter)
+            if Praegustator.config['log_level'] == 'debug'
+              formatter = RSpec::Core::Formatters::DocumentationFormatter.new(c.output)
+            end
+            reporter =  RSpec::Core::Reporter.new(formatter)
             c.instance_variable_set(:@reporter, reporter)
           end
           spec_files = checks.keys.map{|check| "#{Dir.pwd}/#{Praegustator.config['spec']['checks_dir']}/#{check}.rb" }
-          RSpec::Core::Runner.run_patched(spec_files, $stderr, $stdout)
-          RSpec.reset
+          begin
+            RSpec::Core::Runner.run_patched(spec_files, $stderr, $stdout)
+          rescue Error => e
+            $stderr.puts "!! spec execution failed #{e.message}"
+          end
+          if Praegustator.config['log_level'] != 'debug'
+            @parser.parse n,formatter.output_hash
+          end
         end
       end
     end
