@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["timusga@gmail.com"]
   spec.description   = %q{taste and validate the chef cooked infrastructure}
   spec.summary       = %q{DSL over server spec to test chef powered infrastructure}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/timusg/praegustator"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
