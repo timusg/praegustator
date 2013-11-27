@@ -28,7 +28,7 @@ role("web-server") do
  check "application/nginx"
  check "application/puma"
  check "application/s3cmd"
- properties name: "foo"
+ properties :name => "foo"
 end
 ```
 The `role` method mark all nodes with that role .  Within the
