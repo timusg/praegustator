@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "thor"
   spec.add_runtime_dependency "rspec", ">= 2.13.0"
-  spec.add_runtime_dependency "chef"
+  spec.add_runtime_dependency "chef" , ">= 11.4.4"
   spec.add_runtime_dependency "serverspec"
   spec.add_runtime_dependency "colorize"
 

@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
+gemspec
 
 group :development, :test do
-  gem 'rspec'
-  gem 'berkshelf'
   gem 'pry'
   gem 'fuubar'
 end
