@@ -8,6 +8,12 @@ module Praegustator
         suits.each(&:execute)
       end
     end
+
+    def execute_check(query,check)
+      suite = Praegustator::TestSuite.new(query)
+      suite.check check
+      suite.execute
+    end
   end
 end
 

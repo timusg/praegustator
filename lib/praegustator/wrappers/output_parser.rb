@@ -5,7 +5,7 @@ module Praegustator
   module Wrappers
     class OutputParser
       def parse node,json
-        $stdout.puts "Node: #{node.ipaddress.colorize(:blue)} ChefQuery: #{node.query.colorize(:blue)}"
+        $stdout.puts "Node: #{node.ipaddress.dup.colorize(:blue)} ChefQuery: #{node.query.dup.colorize(:blue)}"
         $stdout.puts "  Checks:"
         return if json[:examples].nil?
         json[:examples].each do |e|

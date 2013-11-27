@@ -6,3 +6,7 @@ Feature: Praegustator
   Scenario: check nginx
     When I run `praeg validate`
     Then the output should contain "should be installed"
+
+  Scenario: check taste
+    When I run `praeg taste role:foo nginx`
+    Then the output should contain "should be installed"

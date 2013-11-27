@@ -12,9 +12,7 @@ module Praegustator
     def taste(query,check)
       config_file_path = Dir.pwd+"/.praegustator.yml"
       Praegustator.configure_with config_file_path
-      recipes_dir = Praegustator.config['spec']['recipes_dir']
-      recipes = Dir[Dir.pwd+"/#{recipes_dir}/**/*_recipe.rb"] if recipes.empty?
-      Praegustator::Executor.new.execute(recipes)
+      Praegustator::Executor.new.execute_check(query,check)
     end
 
     desc "validate", "validate infrastructure by executing checks defined in recipe files"
