@@ -17,14 +17,16 @@ module Praegustator
       end
 
 
-      def execute nodes,checks
-        nodes.each do |n|
+      def execute suite
+        suite.nodes.each do |n|
           ENV['TARGET_HOST'] = n.ipaddress
           formatter = RSpec::Core::Formatters::JsonFormatter.new(nil)
           #RSpec.reset
           RSpec.clear_remaining_example_groups
           load 'serverspec.rb'
           begin
+            params = suite.params
+            params[:current_node] = n
             RSpec.configure do |c|
               c.host  = ENV['TARGET_HOST']
               options = Net::SSH::Config.for(c.host)
@@ -33,6 +35,7 @@ module Praegustator
               options[:timeout] = 10
               c.ssh   = Net::SSH.start(c.host, user, options)
               c.os    = backend.check_os
+              set_property params
               c.output = $stdout
               c.color_enabled = true
               c.tty = true
@@ -42,7 +45,7 @@ module Praegustator
               reporter =  RSpec::Core::Reporter.new(formatter)
               c.instance_variable_set(:@reporter, reporter)
             end
-            spec_files = checks.keys.map{|check| "#{Dir.pwd}/#{Praegustator.config['spec']['checks_dir']}/#{check}.rb" }
+            spec_files = suite.checks.keys.map{|check| "#{Dir.pwd}/#{Praegustator.config['spec']['checks_dir']}/#{check}.rb" }
             begin
               RSpec::Core::Runner.run_patched(spec_files, $stderr, $stdout)
             rescue Error => e
@@ -51,8 +54,8 @@ module Praegustator
             if Praegustator.config['log_level'] != 'debug'
               @parser.parse n,formatter.output_hash
             end
-          rescue Exception => e
-            $stderr.puts "!! failed for #{n.ipaddress} : #{e.message}"
+          #rescue Exception => e
+          #  $stderr.puts "!! failed for #{n.ipaddress} : #{e.message}"
           end
         end
       end
