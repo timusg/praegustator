@@ -11,10 +11,9 @@ describe Praegustator::CLI do
 
   describe "#validate" do
     before do
-      Praegustator::Executor.any_instance.stub(:execute).and_return(1)
+      Praegustator::Executor.any_instance.stub(:execute)
     end
     subject { Praegustator::CLI.new.validate("foo") }
-    it { should eq 1 }
   end
 
   describe "#init" do

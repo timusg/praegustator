@@ -5,11 +5,13 @@ require 'praegustator/test_suite'
 require 'praegustator/dsl'
 require 'praegustator/wrappers/chef'
 require 'praegustator/node'
+require 'praegustator/reporter'
 require 'praegustator/setup'
 require 'yaml'
 require 'colorize'
 
 module Praegustator
+  @reporter  = Praegustator::Reporter.new
   @config = {
     'log_level' => 'info',
     'search_driver' => 'chef',
@@ -43,13 +45,16 @@ module Praegustator
     @config
   end
 
+  def self.reporter
+    @reporter
+  end
+
   private
   def self.configure(opts = {})
     valid_keys = @config.keys
     opts.each {|k,v| @config[k] = v if valid_keys.include? k}
   end
 end
-
 
 module RSpec
   module Core

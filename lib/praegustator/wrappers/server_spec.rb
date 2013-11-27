@@ -1,5 +1,4 @@
 require 'praegustator'
-require 'praegustator/wrappers/output_parser'
 require 'net/ssh'
 require 'serverspec'
 require 'rspec/core/formatters/json_formatter'
@@ -11,11 +10,6 @@ include Serverspec::Helper::DetectOS
 module Praegustator
   module Wrappers
     class ServerSpec
-
-      def initialize
-        @parser = Praegustator::Wrappers::OutputParser.new
-      end
-
       def execute suite
         suite.nodes.each do |node|
           ENV['TARGET_HOST'] = node.ipaddress
@@ -44,9 +38,6 @@ module Praegustator
             config.output = $stdout
             config.color_enabled = true
             config.tty = true
-            if Praegustator.config['log_level'] == 'debug'
-              formatter = RSpec::Core::Formatters::DocumentationFormatter.new(config.output)
-            end
             reporter =  RSpec::Core::Reporter.new(formatter)
             config.instance_variable_set(:@reporter, reporter)
           end
@@ -56,15 +47,12 @@ module Praegustator
             $stderr.puts e.backtrace.join("\n")
             $stderr.puts "!! spec execution failed #{e.message}"
           end
-          if Praegustator.config['log_level'] != 'debug'
-            @parser.parse node,formatter.output_hash
-          end
+          Praegustator.reporter.add_spec_result node,formatter.output_hash
         rescue Exception => e
           $stderr.puts e.backtrace.join("\n")
           $stderr.puts "!! failed for #{node.ipaddress} : #{e.message}"
         end
       end
-
     end
   end
 end

@@ -3,6 +3,9 @@ require 'praegustator'
 
 module Praegustator
   class CLI < Thor
+    def self.exit_on_failure?
+      true
+    end
 
     desc "taste", "test an check against a chef query"
     long_desc <<-LONGDESC
@@ -13,6 +16,7 @@ module Praegustator
       config_file_path = Dir.pwd+"/.praegustator.yml"
       Praegustator.configure_with config_file_path
       Praegustator::Executor.new.execute_check(query,check)
+      exit 1 if Praegustator.reporter.status == 'failed'
     end
 
     desc "validate", "validate infrastructure by executing checks defined in recipe files"
@@ -22,6 +26,9 @@ module Praegustator
       recipes_dir = Praegustator.config['spec']['recipes_dir']
       recipes = Dir[Dir.pwd+"/#{recipes_dir}/**/*_recipe.rb"] if recipes.empty?
       Praegustator::Executor.new.execute(recipes)
+
+      Praegustator.reporter.status
+      exit 1 if Praegustator.reporter.status == 'failed'
     end
 
     desc "init" , "setup praegustator"

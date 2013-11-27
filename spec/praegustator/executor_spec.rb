@@ -14,7 +14,6 @@ describe Praegustator::Executor do
       Praegustator::Executor.new.execute  [File.dirname(__FILE__)+"/resources/sample/suits/staging.rb", File.dirname(__FILE__)+"/resources/sample/suits/default.rb"]
       execute_count.should == 6
     end
-
   end
 
   describe "#execute_check" do
