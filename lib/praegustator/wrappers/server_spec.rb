@@ -47,7 +47,7 @@ module Praegustator
             spec_files = suite.checks.keys.map{|check| "#{Dir.pwd}/#{Praegustator.config['spec']['checks_dir']}/#{check}.rb" }
             begin
               RSpec::Core::Runner.run_patched(spec_files, $stderr, $stdout)
-            rescue Error => e
+            rescue Exception => e
               $stderr.puts "!! spec execution failed #{e.message}"
             end
             if Praegustator.config['log_level'] != 'debug'

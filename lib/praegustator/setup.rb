@@ -3,10 +3,10 @@ require 'praegustator'
 module Praegustator
   class Setup
     def init(spec_dir)
+      create_settings  spec_dir
       mkdir(spec_dir)
       create_spec spec_dir
       create_recepie  spec_dir
-      create_settings  spec_dir
     end
 
     def mkdir dir
@@ -24,6 +24,7 @@ module Praegustator
       content = <<-EOF
 role("*")do
   check "basic_commands"
+  properties :user => "root"
 end
       EOF
       create_file "#{dir}/test_recipe.rb",content
@@ -50,8 +51,9 @@ end
 
     def create_spec dir
       content = <<-EOF
+user = property[:user]
 describe command('whoami') do
-  it { should return_stdout 'vagrant' }
+  it { should return_stdout user }
 end
 
 describe command('cat /etc/resolv.conf') do
