@@ -30,12 +30,16 @@ end
     end
 
     def create_settings dir
+      puts "please enter knife's location (default ~/.chef/knife.rb) : "
+      knife_location = $stdin.gets.chomp
+      knife_location = '~/.chef/knife.rb' if knife_location == ''
+
       content = <<-EOF
  spec:
    recipes_dir:  "#{dir}/"
    checks_dir:   "#{dir}/checks/"
  chef:
-   knife_location: "~/.chef/knife.rb"
+   knife_location: "#{knife_location}"
 # ssh:
 #   user: "root"
 #   pasword: nil
