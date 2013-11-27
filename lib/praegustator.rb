@@ -33,7 +33,7 @@ module Praegustator
       config = YAML::load(IO.read(path_to_yaml_file))
     rescue Psych::SyntaxError
       p  "error while parsing yaml configuration file. using defaults."; return
-    rescue Exception
+    rescue Errno::ENOENT
       p  "yaml configuration file couldn't be found. using defaults."; return
     end
     configure(config)  if config
