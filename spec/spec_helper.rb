@@ -1,4 +1,5 @@
 require "praegustator"
+require "rspec/mocks"
 require 'pathname'
 
 RSpec.configure do |config|

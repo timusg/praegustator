@@ -113,4 +113,5 @@ DEPENDENCIES
   praegustator!
   pry
   rake
-  rspec (~> 2.6)
+  rspec (>= 2.13.0)
+  rspec-mocks
