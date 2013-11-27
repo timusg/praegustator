@@ -21,7 +21,6 @@ module Praegustator
         suite.nodes.each do |n|
           ENV['TARGET_HOST'] = n.ipaddress
           formatter = RSpec::Core::Formatters::JsonFormatter.new(nil)
-          #RSpec.reset
           RSpec.clear_remaining_example_groups
           load 'serverspec.rb'
           begin
@@ -54,8 +53,9 @@ module Praegustator
             if Praegustator.config['log_level'] != 'debug'
               @parser.parse n,formatter.output_hash
             end
-          #rescue Exception => e
-          #  $stderr.puts "!! failed for #{n.ipaddress} : #{e.message}"
+          rescue Exception => e
+            $stderr.puts e.backtrace.join("\n")
+            $stderr.puts "!! failed for #{n.ipaddress} : #{e.message}"
           end
         end
       end

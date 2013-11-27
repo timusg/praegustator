@@ -2,7 +2,8 @@ environment :staging
 
 role "web" do
    check "nginx"
-   check "puma" , target: "10.210.10.1"
+   check "puma"
+   properties target: "10.210.10.1"
    check "logrotate"
 end
 

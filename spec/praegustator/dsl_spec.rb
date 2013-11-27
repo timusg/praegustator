@@ -35,7 +35,7 @@ describe Praegustator::Dsl do
       first_suite = suits.first
       checks = first_suite.instance_variable_get(:@checks)
       checks["nginx"].should_not nil
-      checks["puma"][:opts][:target].should == "10.210.10.1"
+      first_suite.params[:target].should == "10.210.10.1"
     end
   end
 end
