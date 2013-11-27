@@ -28,10 +28,13 @@ role("web-server") do
  check "application/nginx"
  check "application/puma"
  check "application/s3cmd"
+ properties name: "foo"
 end
 ```
 The `role` method mark all nodes with that role .  Within the
 block passed to `role` you can declare checks using the `check` method.
+arbitrary hash can be passed to checks usin `properties` method, also
+current node under test is added automatically to properties hash.
 
 Where check are server spec files:
 
@@ -45,6 +48,13 @@ end
 describe service('nginx') do
   it { should be_enabled   }
   it { should be_running   }
+end
+
+app_name = property[:name]
+ip_address = property[:current_node].ipaddress
+
+describe file("/etc/nginx/conf.d/#{app_name}.conf") do
+  it { should contain "server_name #{ip_address}" }
 end
 ```
 
