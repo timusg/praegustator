@@ -16,7 +16,6 @@ module Praegustator
       config_file_path = Dir.pwd+"/.praegustator.yml"
       Praegustator.configure_with config_file_path
       Praegustator::Executor.new.execute_check(query,check)
-      Praegustator.reporter.dump_summary
       exit 1 if Praegustator.reporter.status == 'failed'
     end
 
@@ -29,7 +28,6 @@ module Praegustator
       Praegustator::Executor.new.execute(recipes)
 
       Praegustator.reporter.status
-      Praegustator.reporter.dump_summary
       exit 1 if Praegustator.reporter.status == 'failed'
     end
 

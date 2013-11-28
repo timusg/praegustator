@@ -9,20 +9,9 @@ module Praegustator
       @status
     end
 
-    def dump_summary
-      return if Praegustator.config['report']['fast_feedback']
-      print_all_summary
-      @test_suite_restults.each do |node,json|
-        print_summary node.query, json[:summary]
-        print_passed  json[:examples].select{|e| e[:status] =='passed'}.map{|e| e[:full_description]}
-        print_failures  json[:examples].select{|e| e[:status] =='failed'}.map{|e| e[:full_description]}
-      end
-    end
-
     def add_spec_result node,json
       print_status node.ipaddress , json[:summary][:failure_count] > 0
       return if json[:examples].nil?
-      return if !Praegustator.config['report']['fast_feedback']
       @test_suite_restults[node] = json
       print_summary node.query, json[:summary]
       print_passed  json[:examples].select{|e| e[:status] =='passed'}.map{|e| e[:full_description]}

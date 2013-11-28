@@ -31,8 +31,7 @@ module Praegustator
     'report' => {
       'show_summary' => true,
       'show_passed' => true,
-      'show_failed' => true,
-      'fast_feedback' => false
+      'show_failed' => true
     }
   }
 

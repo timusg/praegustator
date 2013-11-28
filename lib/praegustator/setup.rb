@@ -36,16 +36,20 @@ end
       knife_location = '~/.chef/knife.rb' if knife_location == ''
 
       content = <<-EOF
- spec:
-   recipes_dir:  "#{dir}/"
-   checks_dir:   "#{dir}/checks/"
- chef:
-   knife_location: "#{knife_location}"
-# ssh:
-#   user: "root"
-#   pasword: nil
-#   keys: [ "~/.ssh/id_rsa" ]
-      EOF
+spec:
+  recipes_dir:  "#{dir}/"
+  checks_dir:   "#{dir}/checks/"
+chef:
+  knife_location: "#{knife_location}"
+#ssh:
+#  user: "root"
+#  pasword: nil
+#  keys: [ "~/.ssh/id_rsa" ]
+report:
+  show_summary: true
+  show_passed:  true
+  show_failed:  true
+EOF
       create_file ".praegustator.yml",content
     end
 
