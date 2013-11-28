@@ -2,18 +2,17 @@ require "spec_helper"
 
 describe Praegustator::CLI do
   describe "#taste" do
-    before do
-      Praegustator::Executor.any_instance.stub(:execute_check).and_return('foo')
+    it "execute_check from executor" do
+      Praegustator::Executor.any_instance.should_receive(:execute_check)
+      Praegustator::CLI.new.taste("foo","bar")
     end
-    subject { Praegustator::CLI.new.taste("foo","bar")}
-    it { should eq 'foo' }
   end
 
   describe "#validate" do
-    before do
-      Praegustator::Executor.any_instance.stub(:execute)
+    it "execute from executor" do
+      Praegustator::Executor.any_instance.should_receive(:execute)
+      Praegustator::CLI.new.validate("foo","bar")
     end
-    subject { Praegustator::CLI.new.validate("foo") }
   end
 
   describe "#init" do

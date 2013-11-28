@@ -27,6 +27,12 @@ module Praegustator
       'user' => 'root',
       'pasword' => nil,
       'keys' => []
+    },
+    'report' => {
+      'show_summary' => true,
+      'show_passed' => true,
+      'show_failed' => true,
+      'fast_feedback' => false
     }
   }
 
