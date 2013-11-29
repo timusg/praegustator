@@ -1,4 +1,4 @@
-Praegustator provide simple dsl to validate and test chef managed infrastructure, it use remote ssh and utilize server spec in the backend to define checks.
+Praegustator provide simple dsl to validate and test chef managed infrastructure, it is baced on ssh and utilize server spec in the backend.
 
 ## install
 
@@ -9,7 +9,7 @@ Praegustator provide simple dsl to validate and test chef managed infrastructure
 
 ## run
  
-    praeg validate  #run all recipes
+    praeg validate  #run all checks defined in recipes files
     praeg validate recipe # run recipe
 
 
@@ -63,15 +63,15 @@ end
 Praegustator gem installs the `praeg` command,
 Run `praeg --help` to see the help.
 
-## praegustator configuration file `.praegustator.yml`
+## praegustator configuration file
 
-Provide way to override various praegustator related settings , like
-spec dir , recipe dir and ssh configuration
+`.praegustator.yml` rovide ways to override various praegustator related settings, like
+spec dir, recipes dir and ssh configuration
 
 
 ## ssh config file
   
-   `praegustator` picks ssh configuration for a node from `~/.ssh/config` file or
+   `praegustator` picks ssh configuration from `~/.ssh/config` file or
 global ssh configuration defined in `.praegustator.yml`
 
 ## Useful links
